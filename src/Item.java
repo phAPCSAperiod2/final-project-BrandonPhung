@@ -1,34 +1,27 @@
 /**
- * Represents a lost or found item.
+ * Simple Item class for lost and found.
  */
 public class Item {
 
     private String name;
-    private String description;
     private String location;
-    private boolean isFound;
+    private boolean found;
 
-    public Item(String name, String description, String location) {
+    public Item(String name, String location) {
         this.name = name;
-        this.description = description;
         this.location = location;
-        this.isFound = false;
+        this.found = false;
     }
 
     public String getName() {
         return name;
     }
 
-    public boolean isFound() {
-        return isFound;
-    }
-
     public void markFound() {
-        isFound = true;
+        found = true;
     }
 
     public String toString() {
-        return name + " | " + description + " | " + location +
-               " | Status: " + (isFound ? "Found" : "Lost");
+        return name + " at " + location + " | " + (found ? "Found" : "Lost");
     }
 }

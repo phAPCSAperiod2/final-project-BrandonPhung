@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * Lost and Found Tracker using arrays and user interface.
+ * Simple Lost and Found program using arrays and loops.
  */
 public class LostAndFoundApp {
 
@@ -9,102 +9,89 @@ public class LostAndFoundApp {
 
         Scanner scan = new Scanner(System.in);
 
-        Item[] items = new Item[100]; // fixed-size array
+        Item[] items = new Item[50];
         int count = 0;
 
-        int choice;
+        int choice = 0;
 
-        do {
-            System.out.println("\n=== Lost & Found Tracker ===");
-            System.out.println("1. Report Lost Item");
-            System.out.println("2. View All Items");
-            System.out.println("3. Search Item by Name");
-            System.out.println("4. Mark Item as Found");
+        while (choice != 5) {
+
+            System.out.println("\n1. Add Item");
+            System.out.println("2. View Items");
+            System.out.println("3. Search Item");
+            System.out.println("4. Mark Found");
             System.out.println("5. Exit");
-            System.out.print("Enter choice: ");
+            System.out.print("Choice: ");
 
             choice = scan.nextInt();
             scan.nextLine(); // clear buffer
 
-            switch (choice) {
+            // ADD ITEM
+            if (choice == 1) {
+                System.out.print("Enter item name: ");
+                String name = scan.nextLine();
 
-                case 1:
-                    if (count >= items.length) {
-                        System.out.println("Storage full!");
-                        break;
-                    }
+                System.out.print("Enter location: ");
+                String location = scan.nextLine();
 
-                    System.out.print("Enter item name: ");
-                    String name = scan.nextLine();
+                items[count] = new Item(name, location);
+                count++;
 
-                    System.out.print("Enter description: ");
-                    String desc = scan.nextLine();
-
-                    System.out.print("Enter location: ");
-                    String location = scan.nextLine();
-
-                    items[count] = new Item(name, desc, location);
-                    count++;
-
-                    System.out.println("Item added!");
-                    break;
-
-                case 2:
-                    if (count == 0) {
-                        System.out.println("No items reported.");
-                    } else {
-                        for (int i = 0; i < count; i++) {
-                            System.out.println((i + 1) + ". " + items[i]);
-                        }
-                    }
-                    break;
-
-                case 3:
-                    System.out.print("Enter name to search: ");
-                    String search = scan.nextLine();
-
-                    boolean found = false;
-
-                    for (int i = 0; i < count; i++) {
-                        if (items[i].getName().equalsIgnoreCase(search)) {
-                            System.out.println(items[i]);
-                            found = true;
-                        }
-                    }
-
-                    if (!found) {
-                        System.out.println("Item not found.");
-                    }
-                    break;
-
-                case 4:
-                    System.out.print("Enter item name to mark as found: ");
-                    String foundName = scan.nextLine();
-
-                    boolean updated = false;
-
-                    for (int i = 0; i < count; i++) {
-                        if (items[i].getName().equalsIgnoreCase(foundName)) {
-                            items[i].markFound();
-                            System.out.println("Item marked as found!");
-                            updated = true;
-                        }
-                    }
-
-                    if (!updated) {
-                        System.out.println("Item not found.");
-                    }
-                    break;
-
-                case 5:
-                    System.out.println("Goodbye!");
-                    break;
-
-                default:
-                    System.out.println("Invalid choice.");
+                System.out.println("Item added.");
             }
 
-        } while (choice != 5);
+            // VIEW ITEMS
+            else if (choice == 2) {
+                if (count == 0) {
+                    System.out.println("No items.");
+                } else {
+                    for (int i = 0; i < count; i++) {
+                        System.out.println(items[i]);
+                    }
+                }
+            }
+
+            // SEARCH ITEM
+            else if (choice == 3) {
+                System.out.print("Enter name: ");
+                String search = scan.nextLine();
+
+                boolean found = false;
+
+                for (int i = 0; i < count; i++) {
+                    if (items[i].getName().equalsIgnoreCase(search)) {
+                        System.out.println(items[i]);
+                        found = true;
+                    }
+                }
+
+                if (!found) {
+                    System.out.println("Not found.");
+                }
+            }
+
+            // MARK FOUND
+            else if (choice == 4) {
+                System.out.print("Enter name: ");
+                String name = scan.nextLine();
+
+                for (int i = 0; i < count; i++) {
+                    if (items[i].getName().equalsIgnoreCase(name)) {
+                        items[i].markFound();
+                        System.out.println("Marked as found.");
+                    }
+                }
+            }
+
+            // EXIT
+            else if (choice == 5) {
+                System.out.println("Goodbye.");
+            }
+
+            else {
+                System.out.println("Invalid choice.");
+            }
+        }
 
         scan.close();
     }
